@@ -35,7 +35,7 @@ def extract_categories(label_image):
     unique_classes = np.unique(label_image)
     return unique_classes.tolist()
 
-def test_all_case(net, imdir, maskdir, jisoo, output2, num_classes, patch_size=(112, 112, 80), stride_xy=18, stride_z=4, save_result=True,
+def test_all_case(net, imdir, maskdir, output2, num_classes, patch_size=(112, 112, 80), stride_xy=18, stride_z=4, save_result=True,
                   test_save_path=None, preproc_fn=None, pbar=None):
     for pdx, fname in enumerate(sorted(getFiles(imdir))):
         # load files
@@ -48,7 +48,7 @@ def test_all_case(net, imdir, maskdir, jisoo, output2, num_classes, patch_size=(
 
         if preproc_fn is not None:
             image = preproc_fn(image)
-        prediction, score_map = test_single_case(net,  jisoo,  label, im_x_y, stride_xy, stride_z, patch_size,
+        prediction, score_map = test_single_case(net, label, im_x_y, stride_xy, stride_z, patch_size,
                                                  num_classes=num_classes)  # zyx
 
         prediction = prediction.astype(np.uint8)
@@ -68,7 +68,7 @@ def test_all_case(net, imdir, maskdir, jisoo, output2, num_classes, patch_size=(
             pbar.update(1)
 
 
-def test_single_case(net,  jisoo, label,  image, stride_xy, stride_z, patch_size, num_classes=1, pbar=None):
+def test_single_case(net, label,  image, stride_xy, stride_z, patch_size, num_classes=1, pbar=None):
     w, h, d = image.shape
     # if the size of image is less than patch_size, then padding it
     add_pad = False
@@ -129,7 +129,6 @@ def test_single_case(net,  jisoo, label,  image, stride_xy, stride_z, patch_size
         score_map = score_map[:, wl_pad:wl_pad + w, hl_pad:hl_pad + h, dl_pad:dl_pad + d]
     return label_map, score_map
 
-# CUDA_VISIBLE_DEVICES=0 python predict_organ_flare.py
 def test_calculate_metric():
     start_time = time.time()
     imdir = "./test/"            # Flare test data
@@ -139,13 +138,11 @@ def test_calculate_metric():
     output2 = './predict/'       # prediction
     path1 = output2
     os.makedirs(output2, exist_ok=True)
-    path2 = "./test_label/"      # test label
+    path2 = "./test_label/"      # test label the validation label for flare22
     logging.basicConfig(filename= str(FLAGS.ratio) + '_flare.log',
                         level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
-    num_classes = 14
+    num_classes = 14             # datasets all classes number
     net = unet_3D_mt(in_chns=1, class_num=num_classes).cuda()
-    jisoo = 1
-
     checkpoint = torch.load(cp_path, map_location='cpu', weights_only=False)
     new_state_dict = {}
     for k, v in checkpoint['model_ema'].items():
@@ -158,7 +155,7 @@ def test_calculate_metric():
     net.eval()
     pbar = tqdm(total=FLAGS.test_num, desc="Validation", unit="file")
 
-    test_all_case(net, imdir, path2, jisoo,  output2, num_classes=num_classes,
+    test_all_case(net, imdir, path2, output2, num_classes=num_classes,
                     patch_size=(64, 160, 160), stride_xy=80, stride_z=32, save_result=True, pbar=pbar)
     
     average_accuracy, avg_jaccard = calculate_metrics(path1, path2, FLAGS)    
