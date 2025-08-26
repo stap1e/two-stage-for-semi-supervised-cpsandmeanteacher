@@ -131,14 +131,12 @@ def test_single_case(net, label,  image, stride_xy, stride_z, patch_size, num_cl
 
 def test_calculate_metric():
     start_time = time.time()
-    imdir = "./test/"            # Flare test data
+    imdir = "./FLARE22_val"            # Flare test data
     cp_path = "./your.pth"                              
 
-
-    output2 = './predict/'       # prediction
-    path1 = output2
-    os.makedirs(output2, exist_ok=True)
-    path2 = "./test_label/"      # test label the validation label for flare22
+    path1 = './predict/'       # prediction
+    os.makedirs(path1, exist_ok=True)
+    path2 = "./FLARE22_val_label"      # test label the validation label for flare22
     logging.basicConfig(filename= str(FLAGS.ratio) + '_flare.log',
                         level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
     num_classes = 14             # datasets all classes number
@@ -155,7 +153,7 @@ def test_calculate_metric():
     net.eval()
     pbar = tqdm(total=FLAGS.test_num, desc="Validation", unit="file")
 
-    test_all_case(net, imdir, path2, output2, num_classes=num_classes,
+    test_all_case(net, imdir, path2, path1, num_classes=num_classes,
                     patch_size=(64, 160, 160), stride_xy=80, stride_z=32, save_result=True, pbar=pbar)
     
     average_accuracy, avg_jaccard = calculate_metrics(path1, path2, FLAGS)    
