@@ -132,7 +132,7 @@ def test_single_case(net, image, stride_xy, stride_z, patch_size, num_classes=1,
 def test_calculate_metric():
     start_time = time.time()
     imdir = "./FLARE22_val"            # Flare test data
-    cp_path = "./your.pth"                            
+    cp_path = "./Your.pth"                            
 
     path1 = './predict/'               # prediction
     os.makedirs(path1, exist_ok=True)
