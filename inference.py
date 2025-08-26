@@ -134,12 +134,12 @@ def test_calculate_metric():
     imdir = "./FLARE22_val"            # Flare test data
     cp_path = "./your.pth"                              
 
-    path1 = './predict/'       # prediction
+    path1 = './predict/'               # prediction
     os.makedirs(path1, exist_ok=True)
     path2 = "./FLARE22_val_label"      # test label the validation label for flare22
     logging.basicConfig(filename= str(FLAGS.ratio) + '_flare.log',
                         level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
-    num_classes = 14             # datasets all classes number
+    num_classes = 14                   # datasets all classes number
     net = unet_3D_mt(in_chns=1, class_num=num_classes).cuda()
     checkpoint = torch.load(cp_path, map_location='cpu', weights_only=False)
     new_state_dict = {}
