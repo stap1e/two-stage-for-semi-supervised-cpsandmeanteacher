@@ -37,19 +37,15 @@ def extract_categories(label_image):
 
 def test_all_case(net, imdir, maskdir, output2, num_classes, patch_size=(112, 112, 80), stride_xy=18, stride_z=4, save_result=True,
                   test_save_path=None, preproc_fn=None, pbar=None):
-    for pdx, fname in enumerate(sorted(getFiles(imdir))):
+    for _, fname in enumerate(sorted(getFiles(imdir))):
         # load files
         print(f"Processing {fname.replace('_0000.nii.gz', '')}")
         sitk_im = sitk.ReadImage(os.path.join(imdir, fname))  # img
-        im_x_y = sitk.GetArrayFromImage(sitk_im)  # zyx
-
-        sitk_mask = sitk.ReadImage(os.path.join(maskdir, fname))  # mask
-        label = sitk.GetArrayFromImage(sitk_mask)
+        im_x_y = sitk.GetArrayFromImage(sitk_im)  
 
         if preproc_fn is not None:
             image = preproc_fn(image)
-        prediction, score_map = test_single_case(net, label, im_x_y, stride_xy, stride_z, patch_size,
-                                                 num_classes=num_classes)  # zyx
+        prediction, _ = test_single_case(net, im_x_y, stride_xy, stride_z, patch_size, num_classes=num_classes) 
         
         prediction = prediction.cpu().numpy().astype(np.uint8)
 
@@ -68,7 +64,7 @@ def test_all_case(net, imdir, maskdir, output2, num_classes, patch_size=(112, 11
             pbar.update(1)
 
 
-def test_single_case(net, label, image, stride_xy, stride_z, patch_size, num_classes=1, pbar=None):
+def test_single_case(net, image, stride_xy, stride_z, patch_size, num_classes=1, pbar=None):
     w, h, d = image.shape
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     image = torch.from_numpy(image).to(device)
