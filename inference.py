@@ -133,7 +133,7 @@ def test_single_case(net,  jisoo, label,  image, stride_xy, stride_z, patch_size
 def test_calculate_metric():
     start_time = time.time()
     imdir = "./test/"            # Flare test data
-    cp_path = "./ckpts_flare_final/fixmatch/ep486bs2mdice0.8476_ema0.8484mt_fixmatch-2.pth"                              
+    cp_path = "./your.pth"                              
 
 
     output2 = './predict/'       # prediction
