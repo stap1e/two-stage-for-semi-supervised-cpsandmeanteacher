@@ -1,5 +1,5 @@
 import os
-import math
+import math, logging, time
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -182,6 +182,35 @@ def calculate_metrics(pred_folder, label_folder, args):
     print(f'******************{args.dataset} Average jaccard: {avg_jaccard}')
     return average_accuracy, avg_jaccard
 
+logs = set()
+def init_log(name, level=logging.INFO, log_file=None, console_output=True):
+    if (name, level, log_file, console_output) in logs:
+        return logging.getLogger(name)
+    # logs.add((name, level))
+    logs.add((name, level, log_file, console_output))
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    
+    if not logger.handlers:
+        format_str = "[%(asctime)s][%(levelname)8s] %(message)s"
+        formatter = logging.Formatter(format_str)
+        if console_output:
+            ch = logging.StreamHandler()
+            ch.setLevel(level)
+            if "SLURM_PROCID" in os.environ:
+                rank = int(os.environ["SLURM_PROCID"])
+                logger.addFilter(lambda record: rank == 0)
+            # else:
+            #     rank = 0
+            ch.setFormatter(formatter)
+            logger.addHandler(ch)
+        
+        if log_file:
+            fh = logging.FileHandler(log_file)
+            fh.setLevel(level)
+            fh.setFormatter(formatter)
+            logger.addHandler(fh)
+    return logger
 
 
 class UnetConv3(nn.Module):
