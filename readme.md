@@ -10,10 +10,10 @@
 
 And we just need the keywords 'model' or 'model_ema', the others is not needed for inference.
 
->Here we will classify something about our picture from paper.
+> Here we will classify something about our picture from paper.
 
->If you have read our paper, you may find the AMOS22 results visualization with error to class name.
+> If you have read our paper, you may find the AMOS22 results visualization with error to class name.
 
->Now, we give a correct picture to show it clearly and we are so sorry to it because the camera ready is out of time.
+> Now, we give a correct picture to show it clearly and we are so sorry to it because the camera ready is out of time.
 
-!["AMOS22-results.png"](AMOS22-visualization.png "AMOS22-visualization")
+!["./AMOS22-results.png"](AMOS22-visualization.png "AMOS22-visualization")
