@@ -10,7 +10,7 @@
 
 And we just need the keywords 'model' or 'model_ema', the others is not needed for inference.
 
-> Here we will classify something about our picture from paper.
+> Here we want to classify something about a picture in this paper.
 
 > If you have read our paper, you may find the AMOS22 results visualization with error to class name.
 
