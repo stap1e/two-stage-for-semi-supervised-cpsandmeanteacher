@@ -11,10 +11,8 @@ CLASSES = {
             'flare22_ssl': ['Liver', 'Right kidney', 'Spleen', 'Pancreas', 'Aorta', 'IVC', 
                       'RAG', 'LAG', 'Gallbladder', 'Esophagus', 'Stomach', 'Duodenum', 'Left kidney'],
 
-            'amos': ['background', 'Liver', 'Right kidney', 'Spleen', 'Pancreas', 'Aorta', 'IVC', 
-                      'RAG', 'LAG', 'Gallbladder', 'Esophagus', 'Stomach', 'Duodenum', 'Left kidney',
-                      'Bladder', 'Prostate/Uterus'],
-            'amos_ssl': ['Liver', 'Right kidney', 'Spleen', 'Pancreas', 'Aorta', 'IVC', 
-                      'RAG', 'LAG', 'Gallbladder', 'Esophagus', 'Stomach', 'Duodenum', 'Left kidney',
-                      'Bladder', 'Prostate/Uterus']
+            'amos': ['background', 'Spleen', 'Right kidney', 'Left kidney', 'Gallbladder', 'Esophagus','Liver', 'Stomach', 'Aorta',
+                         'IVC', 'Pancreas',  'RAG', 'LAG', 'Duodenum', 'Bladder', 'Prostate/Uterus'],
+            'amos_ssl': ['Spleen', 'Right kidney', 'Left kidney', 'Gallbladder', 'Esophagus','Liver', 'Stomach', 'Aorta',
+                         'IVC', 'Pancreas',  'RAG', 'LAG', 'Duodenum', 'Bladder', 'Prostate/Uterus']
            }
