@@ -16,4 +16,4 @@ If you have read our paper, you may find the AMOS22 results visualization with e
 
 Now, we give a correct picture to show it clearly and we are so sorry to it because the camera ready is out of time.
 
-!["D:\lhy\research_group\prcv25\AMOS22-results.png"](AMOS22-visualization.png "AMOS22-visualization")
+!["./AMOS22-results.png"](AMOS22-visualization.png "AMOS22-visualization")
