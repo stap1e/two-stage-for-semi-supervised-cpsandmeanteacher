@@ -16,4 +16,4 @@ And we just need the keywords 'model' or 'model_ema', the others is not needed f
 
 > Now, we give a correct picture to show it clearly and we are so sorry to it because the camera ready is out of time.
 
-!["./AMOS22-results.png"](AMOS22-visualization.png "AMOS22-visualization")
+!["./AMOS22-results.png"](AMOS22visualization.png "AMOS22-visualization")
